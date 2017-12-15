@@ -1,0 +1,13 @@
+{
+  "name": "front-end-temp",
+  "description": "Template for web developing",
+  "main": "index.js",
+  "authors": [
+    "Alexander Kolodka"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "devDependencies": {
+    "bxslider": "*"
+  }
+}
