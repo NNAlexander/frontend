@@ -20,12 +20,12 @@ module.exports =  function(options) {
 				$.imagemin.gifsicle({interlaced: true}),
 				$.imagemin.jpegtran({progressive: true}),
 				$.imagemin.optipng({optimizationLevel: 5}),
-				// $.imagemin.svgo({
-				// 	plugins: [
-				// 		{removeViewBox: true},
-				// 		{cleanupIDs: false}
-				// 	]
-				// })
+				$.imagemin.svgo({
+					plugins: [
+						{removeViewBox: true},
+						{cleanupIDs: false}
+					]
+				})
 			])))
 			.pipe($.debug({title: 'imagemin'}))
 			.pipe(gulp.dest(options.dest));

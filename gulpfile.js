@@ -11,6 +11,8 @@ function callTask(taskName, path, options) {
 		return task(callback);
 	});
 };
+//====================================================================
+//====================================================================
 
 
 //==PUG to PHP
@@ -47,51 +49,67 @@ callTask('sass-build','./tasks/sass-build',
 callTask('js','./tasks/js',
 	{
 		src: 'app/js/**/*.js' ,
-		dest: 'build/js' ,
+		dest: 'build/js' , 
 	});
 //====================================================================
 
+
+//==BrowserSync
 callTask('browserSync','./tasks/browserSync', { 
-	proxy: 'Furniture',
+	proxy: 'server',
 	// server: 'app',
-	srcWatch: ['app/*.html','app/js/**/*.js', 'app/preJS/**/*.js','app/css/**/*.css','app/*.php','app/*.pug', 'app/pug/**/*.pug'],
+	srcWatch: [ 
+	'build/js/**/*.js',
+	'build/css/**/*.css',
+	'build/*.php',
+	],
 });
+//====================================================================
 
 
+//==Watch
 callTask('watch','./tasks/watch', { watch: {
-	sass: ['app/sass/**/*.sass', 'app/rigger/sass/**/*sass'],
-	js: 'app/preJS/**/*.js',
+	sass: 'app/sass/**/*.sass',
+	js: 'app/js/**/*.js',
 	pug: ['app/*.pug','app/pug/**/*.pug'],
-	php: 'app/*.php',
 }});
+//====================================================================
 
+//==Delete build folder
 callTask('removeBuild','./tasks/removeBuild', { build: 'build'});
+//====================================================================
+
+//==Minimaze images
+callTask('imagemin','./tasks/imagemin', { src: 'app/img/**/*.*' , dest: 'build/img'});
+//====================================================================
+
+//==Throw files in the build folder
 callTask('throwFiles','./tasks/throwFiles', { 
 	src: {
-		html: 'app/*.html',
-		css: 'app/css/**/*.css',
-		js: 'app/js/**/*.js',
 		fonts: 'app/fonts/**/*.*',
-		img: 'app/img/**/*.*',
-		php: 'app/*php',
+		php: 'app/php/**/*php',
 		other: ['app/.htaccess'],
 	},
 	dest: {
-		html: 'build',
-		css: 'build/css',
-		js: 'build/js',
 		fonts: 'build/fonts',
-		img: 'build/img',
-		php: 'build',
+		php: 'build/php',
 		other: 'build',
 	}
 });
+//====================================================================
 
-callTask('imagemin','./tasks/imagemin', { src: 'app/img/**/*.*' , dest: 'app/img'});
+//Development task
+gulp.task('dev', 
+	gulp.series('sass','js','pug','imagemin','throwFiles',
+		gulp.parallel('watch','browserSync')));
+//====================================================================
 
-gulp.task('dev', gulp.series('sass','js','pug',  gulp.parallel('watch','browserSync')));
+//==Default Task
 gulp.task('default', gulp.series('dev'));
+//====================================================================
 
+//Build Task
 gulp.task('build', 
-	gulp.series(
-		gulp.parallel('removeBuild', 'imagemin', 'sass-build', 'js','pug'),'throwFiles'));
+	gulp.series('removeBuild',
+		gulp.parallel('imagemin', 'sass-build', 'js','pug','throwFiles')));
+//====================================================================
