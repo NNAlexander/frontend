@@ -12,10 +12,17 @@ function callTask(taskName, path, options) {
 	});
 };
 
+//==PUG to PHP
+callTask('pug','./tasks/pug', 
+	{
+		src: ['app/index.pug', 'app/pug/**/*.pug', '!app/pug/**/_*.pug'] ,
+		dest: {
+			index: 'build',
+			other: 'build/php',
+		},
+		pretty: false ,
+	});
 
-callTask('pug','./tasks/pug', { src: ['app/*.pug' ], dest: 'app', pretty: false });
-
-callTask('pug-php','./tasks/pug-php', { src: 'app/*.not', dest: 'app', pretty: false });
 
 callTask('js','./tasks/js', { src: 'app/preJS/**/*.js' , dest: 'app/js'});
 

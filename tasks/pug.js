@@ -2,7 +2,6 @@
 
 const gulp           = require('gulp');
 const $              = require('gulp-load-plugins')();
-// const browserSync    = require('browser-sync').create();
 
 module.exports =  function(options) {
 	return function() {
@@ -20,8 +19,9 @@ module.exports =  function(options) {
 			.pipe($.debug({title: 'PUG debug'}))
 			.pipe($.htmlmin())
 			.pipe($.debug({title: 'htmlmin'}))
-			.pipe(gulp.dest(options.dest))
-			// .pipe(browserSync.stream());
+			.pipe($.rename({extname: '.php'}))
+			.pipe($.if('index.php',gulp.dest(options.dest.index)))
+			.pipe($.if('!index.php',gulp.dest(options.dest.other)))
 	};
 };
 
