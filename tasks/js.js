@@ -2,7 +2,6 @@
 
 const gulp           = require('gulp');
 const $              = require('gulp-load-plugins')();
-// const browserSync    = require('browser-sync').create();
 
 module.exports =  function(options) {
 	return function() {
@@ -21,6 +20,5 @@ module.exports =  function(options) {
 			.pipe($.rename({suffix: '.min', prefix : ''}))
 			.pipe($.debug({title: 'JS rename'}))
 			.pipe(gulp.dest(options.dest))
-			// .pipe(browserSync.reload({stream: true}));
 	};
 };

@@ -12,6 +12,7 @@ function callTask(taskName, path, options) {
 	});
 };
 
+
 //==PUG to PHP
 callTask('pug','./tasks/pug', 
 	{
@@ -22,6 +23,7 @@ callTask('pug','./tasks/pug',
 		},
 		pretty: false ,
 	});
+//====================================================================
 
 
 //==SASS to CSS
@@ -38,11 +40,16 @@ callTask('sass-build','./tasks/sass-build',
 		dest: 'build/css',
 		autoprefixer: 'last 5 versions',
 	});
+//====================================================================
 
 
-
-callTask('js','./tasks/js', { src: 'app/preJS/**/*.js' , dest: 'app/js'});
-
+//==JS to JS
+callTask('js','./tasks/js',
+	{
+		src: 'app/js/**/*.js' ,
+		dest: 'build/js' ,
+	});
+//====================================================================
 
 callTask('browserSync','./tasks/browserSync', { 
 	proxy: 'Furniture',
