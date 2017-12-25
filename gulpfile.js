@@ -24,12 +24,25 @@ callTask('pug','./tasks/pug',
 	});
 
 
+//==SASS to CSS
+callTask('sass','./tasks/sass', 
+	{
+		src: 'app/sass/**/*.sass',
+		dest: 'build/css',
+		autoprefixer: 'last 5 versions',
+	});
+
+callTask('sass-build','./tasks/sass-build', 
+	{
+		src: 'app/sass/**/*.sass',
+		dest: 'build/css',
+		autoprefixer: 'last 5 versions',
+	});
+
+
+
 callTask('js','./tasks/js', { src: 'app/preJS/**/*.js' , dest: 'app/js'});
 
-callTask('sass','./tasks/sass', { src: 'app/sass/**/*.sass', dest: 'app/css', autoprefixer: 'last 5 versions'});
-callTask('sassRigger','./tasks/sassRigger', { src: 'app/rigger/sass/**.*sass', dest: 'app/rigger/css', autoprefixer: 'last 5 versions'});
-
-callTask('sass-build','./tasks/sass-build', { src: ['app/sass/**/*.sass','!app/sass/riggerSass'], dest: 'app/css', autoprefixer: 'last 5 versions'});
 
 callTask('browserSync','./tasks/browserSync', { 
 	proxy: 'Furniture',
@@ -69,9 +82,9 @@ callTask('throwFiles','./tasks/throwFiles', {
 
 callTask('imagemin','./tasks/imagemin', { src: 'app/img/**/*.*' , dest: 'app/img'});
 
-gulp.task('dev', gulp.series('sass','sassRigger','js','pug', 'pug-php', gulp.parallel('watch','browserSync')));
+gulp.task('dev', gulp.series('sass','js','pug',  gulp.parallel('watch','browserSync')));
 gulp.task('default', gulp.series('dev'));
 
 gulp.task('build', 
 	gulp.series(
-		gulp.parallel('removeBuild', 'imagemin', 'sass-build','sassRigger', 'js','pug', 'pug-php'),'throwFiles'));
+		gulp.parallel('removeBuild', 'imagemin', 'sass-build', 'js','pug'),'throwFiles'));
